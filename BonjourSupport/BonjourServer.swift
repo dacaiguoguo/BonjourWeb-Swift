@@ -37,9 +37,10 @@ class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegat
     
     func netServiceDidPublish(sender: NSNetService) {
         self.netService = sender
+        print("\(sender.name).local:\(sender.port)")
     }
     func netService(sender: NSNetService, didNotPublish errorDict: [String: NSNumber]) {
-        fatalError(errorDict.description)
+//        fatalError(errorDict.description)
     }
     
     func netService(sender: NSNetService, didAcceptConnectionWithInputStream readStream: NSInputStream, outputStream writeStream: NSOutputStream) {
@@ -61,7 +62,7 @@ class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegat
         } else {
             
             if self.netService == nil {
-                self.netService = NSNetService(domain: "local", type: kBonjourServiceType, name: UIDevice.currentDevice().name, port: 0)
+                self.netService = NSNetService(domain: "local.", type: kBonjourServiceType, name: UIDevice.currentDevice().name, port: 51111)
                 self.netService?.delegate = self
             }
             
